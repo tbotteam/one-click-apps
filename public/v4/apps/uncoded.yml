@@ -2,8 +2,14 @@
 captainVersion: 4
 caproverOneClickApp:
     instructions:
-        start: unCoded Trading Bot - Bitte fuellen Sie alle erforderlichen Felder aus.
-        end: Deployment abgeschlossen! Ihre Trading Bot Anwendung ist aktiv.
+        start: |
+            unCoded Trading Bot - Bitte fuellen Sie alle erforderlichen Felder aus.
+
+            Nach dem Deployment ist das Bot-Dashboard erreichbar unter:
+            IHRE-SERVER-IP:4000
+        end: |
+            Deployment abgeschlossen! Ihre Trading Bot Anwendung ist aktiv.
+            Bot-Dashboard: IHRE-SERVER-IP:$$cap_frontend_port
     displayName: unCoded Trading Bot
     description: Trading Bot mit Telegram Integration und PostgreSQL Datenbank
     documentation: Taken from https://uncoded-1.gitbook.io/uncoded-docs/
