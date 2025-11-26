@@ -102,6 +102,8 @@ services:
         restart: always
         depends_on:
             - $$cap_appname-db
+        ports:
+            - '$$cap_frontend_port:$$cap_frontend_port'
         environment:
             POSTGRES_URL: postgresql://postgres:$$cap_postgres_password@srv-captain--$$cap_appname-db:5432/uncoded_db
             PORT: $$cap_frontend_port
