@@ -39,6 +39,17 @@ caproverOneClickApp:
           description: Ihre persoenliche Telegram User-ID
           defaultValue: ''
           validRegex: /.+/
+        - id: $$cap_frontend_port
+          label: Frontend PORT
+          description: Interner Port, auf dem das Frontend lauscht
+          defaultValue: '4000'
+          validRegex: /^\d+$/
+        - id: $$cap_app_password
+          label: APP Password
+          description: Passwort fuer den App-Login
+          defaultValue: ''
+          validRegex: /.+/
+
 services:
     $$cap_appname-db:
         image: postgres:16
@@ -51,6 +62,7 @@ services:
             POSTGRES_PASSWORD: $$cap_postgres_password
         caproverExtra:
             notExposeAsWebApp: true
+
     $$cap_appname-trading:
         image: aureumvictoria/uncoded-trading-bot:2025.09.09
         restart: always
@@ -68,6 +80,7 @@ services:
             PGSSLMODE: disable
         caproverExtra:
             notExposeAsWebApp: true
+
     $$cap_appname-telegram:
         image: aureumvictoria/uncoded-telegram-bot:2025.09.09
         restart: always
@@ -87,3 +100,15 @@ services:
             PGSSLMODE: disable
         caproverExtra:
             notExposeAsWebApp: true
+
+    $$cap_appname-frontend:
+        image: tbotteam/uncoded-js-frontend:latest
+        restart: always
+        depends_on:
+            - $$cap_appname-db
+        environment:
+            POSTGRES_URL: postgresql://postgres:$$cap_postgres_password@srv-captain--$$cap_appname-db:5432/uncoded_db
+            PORT: $$cap_frontend_port
+            APP_PASSWORD: $$cap_app_password
+        caproverExtra:
+            containerHttpPort: $$cap_frontend_port
