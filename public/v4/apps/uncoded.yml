@@ -110,9 +110,12 @@ services:
             - $$cap_appname-db
         ports:
             - '$$cap_frontend_port:$$cap_frontend_port'
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock:ro
         environment:
             POSTGRES_URL: postgresql://postgres:$$cap_postgres_password@srv-captain--$$cap_appname-db:5432/uncoded_db
             PORT: $$cap_frontend_port
             APP_PASSWORD: $$cap_app_password
+            TRADING_CONTAINER_NAME: srv-captain--$$cap_appname-trading
         caproverExtra:
             containerHttpPort: $$cap_frontend_port
