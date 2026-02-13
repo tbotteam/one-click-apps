@@ -2,18 +2,13 @@
 captainVersion: 4
 caproverOneClickApp:
     instructions:
-        start: |
-            unCoded Trading Bot - Bitte fuellen Sie alle erforderlichen Felder aus.
-
-            Nach dem Deployment ist das Bot-Dashboard erreichbar unter:
-            IHRE-SERVER-IP:4000
-        end: |
-            Deployment abgeschlossen! Ihre Trading Bot Anwendung ist aktiv.
-            Bot-Dashboard: IHRE-SERVER-IP:$$cap_frontend_port
+        start: unCoded Trading Bot GOOGLEID ver - Bitte fuellen Sie alle erforderlichen Felder aus.
+        end: Deployment abgeschlossen! Ihre Trading Bot Anwendung ist aktiv.
     displayName: unCoded Trading Bot
-    description: Trading Bot mit Telegram Integration und PostgreSQL Datenbank
+    description: Trading Bot mit Google Integration und PostgreSQL Datenbank
     documentation: Taken from https://uncoded-1.gitbook.io/uncoded-docs/
     isOfficial: true
+
     variables:
         - id: $$cap_postgres_password
           label: PostgreSQL Password
@@ -30,21 +25,6 @@ caproverOneClickApp:
           description: Ihr Binance API Secret
           defaultValue: ''
           validRegex: /.+/
-        - id: $$cap_telegram_bot_token
-          label: Telegram Bot Token
-          description: Telegram Bot Token von @BotFather
-          defaultValue: ''
-          validRegex: /.+/
-        - id: $$cap_telegram_group_id
-          label: Telegram Group ID
-          description: Ihre Telegram Gruppen-ID
-          defaultValue: ''
-          validRegex: /.+/
-        - id: $$cap_telegram_owner_id
-          label: Telegram Owner ID
-          description: Ihre persoenliche Telegram User-ID
-          defaultValue: ''
-          validRegex: /.+/
         - id: $$cap_frontend_port
           label: Frontend PORT
           description: Interner Port, auf dem das Frontend lauscht
@@ -55,6 +35,22 @@ caproverOneClickApp:
           description: Passwort fuer den App-Login
           defaultValue: ''
           validRegex: /.+/
+        - id: $$cap_telegram_bot_token
+          label: Telegram Bot Token (optional)
+          description: Telegram Bot Token von @BotFather
+          defaultValue: '0'
+          validRegex: /.+/
+        - id: $$cap_telegram_group_id
+          label: Telegram Group ID (optional)
+          description: Ihre Telegram Gruppen-ID
+          defaultValue: '0'
+          validRegex: /.+/
+        - id: $$cap_telegram_owner_id
+          label: Telegram Owner ID (optional)
+          description: Ihre persoenliche Telegram User-ID
+          defaultValue: '0'
+          validRegex: /.+/
+
 services:
     $$cap_appname-db:
         image: postgres:16
@@ -67,8 +63,9 @@ services:
             POSTGRES_PASSWORD: $$cap_postgres_password
         caproverExtra:
             notExposeAsWebApp: true
+
     $$cap_appname-trading:
-        image: aureumvictoria/uncoded-trading-bot:2025.09.09
+        image: aureumvictoria/uncoded-trading-bot:951
         restart: always
         depends_on:
             - $$cap_appname-db
@@ -84,8 +81,9 @@ services:
             PGSSLMODE: disable
         caproverExtra:
             notExposeAsWebApp: true
+
     $$cap_appname-telegram:
-        image: aureumvictoria/uncoded-telegram-bot:2025.09.09
+        image: aureumvictoria/uncoded-telegram-bot:951
         restart: always
         depends_on:
             - $$cap_appname-db
@@ -103,8 +101,9 @@ services:
             PGSSLMODE: disable
         caproverExtra:
             notExposeAsWebApp: true
+
     $$cap_appname-frontend:
-        image: tbotteam/uncoded-js-frontend:latest
+        image: tbotteam/uncoded-js-frontend:prefinal4
         restart: always
         depends_on:
             - $$cap_appname-db
