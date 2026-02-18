@@ -2,7 +2,7 @@
 captainVersion: 4
 caproverOneClickApp:
     instructions:
-        start: unCoded Trading Bot GOOGLEID ver - Bitte fuellen Sie alle erforderlichen Felder aus.
+        start: unCoded Trading Bot GTAX version - Bitte fuellen Sie alle erforderlichen Felder aus.
         end: Deployment abgeschlossen! Ihre Trading Bot Anwendung ist aktiv.
     displayName: unCoded Trading Bot
     description: Trading Bot mit Google Integration und PostgreSQL Datenbank
@@ -35,6 +35,11 @@ caproverOneClickApp:
           description: Passwort fuer den App-Login
           defaultValue: ''
           validRegex: /.+/
+        - id: $$cap_viewer_password
+          label: Viewer Password (optional)
+          description: Passwort fuer den View-Only Zugang (kein Zugriff auf Settings/Tax)
+          defaultValue: ''
+          validRegex: /^.*$/
         - id: $$cap_telegram_bot_token
           label: Telegram Bot Token (optional)
           description: Telegram Bot Token von @BotFather
@@ -115,6 +120,7 @@ services:
             POSTGRES_URL: postgresql://postgres:$$cap_postgres_password@srv-captain--$$cap_appname-db:5432/uncoded_db
             PORT: $$cap_frontend_port
             APP_PASSWORD: $$cap_app_password
+            VIEWER_PASSWORD: $$cap_viewer_password
             TRADING_CONTAINER_NAME: srv-captain--$$cap_appname-trading
         caproverExtra:
             containerHttpPort: $$cap_frontend_port
