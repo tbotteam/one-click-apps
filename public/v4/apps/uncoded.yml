@@ -2,7 +2,7 @@
 captainVersion: 4
 caproverOneClickApp:
     instructions:
-        start: unCoded Trading Bot GTAX version - Bitte fuellen Sie alle erforderlichen Felder aus.
+        start: unCoded Trading Bot Google version - Bitte fuellen Sie alle erforderlichen Felder aus.
         end: Deployment abgeschlossen! Ihre Trading Bot Anwendung ist aktiv.
     displayName: unCoded Trading Bot
     description: Trading Bot mit Google Integration und PostgreSQL Datenbank
@@ -70,7 +70,7 @@ services:
             notExposeAsWebApp: true
 
     $$cap_appname-trading:
-        image: aureumvictoria/uncoded-trading-bot:951
+        image: aureumvictoria/uncoded-trading-bot:952
         restart: always
         depends_on:
             - $$cap_appname-db
@@ -88,7 +88,7 @@ services:
             notExposeAsWebApp: true
 
     $$cap_appname-telegram:
-        image: aureumvictoria/uncoded-telegram-bot:951
+        image: aureumvictoria/uncoded-telegram-bot:952
         restart: always
         depends_on:
             - $$cap_appname-db
