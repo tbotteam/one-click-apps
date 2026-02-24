@@ -70,7 +70,7 @@ services:
             notExposeAsWebApp: true
 
     $$cap_appname-trading:
-        image: aureumvictoria/uncoded-trading-bot:952
+        image: aureumvictoria/uncoded-trading-bot:2025.09.09
         restart: always
         depends_on:
             - $$cap_appname-db
@@ -88,7 +88,7 @@ services:
             notExposeAsWebApp: true
 
     $$cap_appname-telegram:
-        image: aureumvictoria/uncoded-telegram-bot:952
+        image: aureumvictoria/uncoded-telegram-bot:2025.09.09
         restart: always
         depends_on:
             - $$cap_appname-db
@@ -108,7 +108,7 @@ services:
             notExposeAsWebApp: true
 
     $$cap_appname-frontend:
-        image: tbotteam/uncoded-js-frontend:prefinal4
+        image: tbotteam/uncoded-js-frontend:latest
         restart: always
         depends_on:
             - $$cap_appname-db
