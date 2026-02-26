@@ -2,57 +2,86 @@
 captainVersion: 4
 caproverOneClickApp:
     instructions:
-        start: unCoded Trading Bot Google version - Bitte fuellen Sie alle erforderlichen Felder aus.
-        end: Deployment abgeschlossen! Ihre Trading Bot Anwendung ist aktiv.
+        start: >-
+            unCoded Trading Bot Setup — Please fill in all required fields.
+            Fields marked with ★ are mandatory.
+        end: >-
+            Deployment complete! Your unCoded Trading Bot is now active.
+            Access the frontend via the assigned URL.
     displayName: unCoded Trading Bot
-    description: Trading Bot mit Google Integration und PostgreSQL Datenbank
-    documentation: Taken from https://uncoded-1.gitbook.io/uncoded-docs/
+    description: Automated trading bot with Google OAuth, Binance API integration and PostgreSQL database
+    documentation: https://uncoded-1.gitbook.io/uncoded-docs/
     isOfficial: true
 
     variables:
         - id: $$cap_postgres_password
-          label: PostgreSQL Password
-          description: Passwort fuer die PostgreSQL Datenbank
+          label: '🔐 PostgreSQL Password ★'
+          description: >-
+              Password for the internal PostgreSQL database.
+              Min. 8 characters. Will be auto-generated if left as default.
           defaultValue: $$cap_gen_random_hex(16)
           validRegex: /.{8,}/
+
         - id: $$cap_api_key
-          label: Binance API Key
-          description: Ihr Binance API Key
+          label: '🔑 Binance API Key ★'
+          description: >-
+              Your Binance API Key. Create one at binance.com → API Management.
+              Make sure to enable Spot & Margin Trading permissions.
           defaultValue: ''
           validRegex: /.+/
+
         - id: $$cap_api_secret
-          label: Binance API Secret
-          description: Ihr Binance API Secret
+          label: '🔑 Binance API Secret ★'
+          description: >-
+              Your Binance API Secret. Keep this confidential — never share it publicly.
           defaultValue: ''
           validRegex: /.+/
+
         - id: $$cap_frontend_port
-          label: Frontend PORT
-          description: Interner Port, auf dem das Frontend lauscht
+          label: '🌐 Frontend Port ★'
+          description: >-
+              Internal port the frontend listens on. Default: 4000.
+              Change only if port 4000 is already in use on your server.
           defaultValue: '4000'
           validRegex: /^\d+$/
+
         - id: $$cap_app_password
-          label: APP Password
-          description: Passwort fuer den App-Login
+          label: '🛡️ App Password ★'
+          description: >-
+              Master password for full app access (Settings, Tax, Trading controls).
+              Use a strong password with mixed characters.
           defaultValue: ''
           validRegex: /.+/
+
         - id: $$cap_viewer_password
-          label: Viewer Password (optional)
-          description: Passwort fuer den View-Only Zugang (kein Zugriff auf Settings/Tax)
+          label: '👁️ Viewer Password (optional)'
+          description: >-
+              Password for read-only access. Users with this password cannot access
+              Settings or Tax sections. Leave empty to disable viewer mode.
           defaultValue: ''
           validRegex: /^.*$/
+
         - id: $$cap_telegram_bot_token
-          label: Telegram Bot Token (optional)
-          description: Telegram Bot Token von @BotFather
+          label: '📬 Telegram Bot Token (optional)'
+          description: >-
+              Token from @BotFather on Telegram. Required for trade notifications.
+              Set to 0 to disable Telegram integration.
           defaultValue: '0'
           validRegex: /.+/
+
         - id: $$cap_telegram_group_id
-          label: Telegram Group ID (optional)
-          description: Ihre Telegram Gruppen-ID
+          label: '💬 Telegram Group ID (optional)'
+          description: >-
+              ID of your Telegram group for bot notifications.
+              Use @userinfobot to retrieve your group ID. Set to 0 to disable.
           defaultValue: '0'
           validRegex: /.+/
+
         - id: $$cap_telegram_owner_id
-          label: Telegram Owner ID (optional)
-          description: Ihre persoenliche Telegram User-ID
+          label: '👤 Telegram Owner ID (optional)'
+          description: >-
+              Your personal Telegram user ID for direct bot commands.
+              Use @userinfobot to retrieve your user ID. Set to 0 to disable.
           defaultValue: '0'
           validRegex: /.+/
 
@@ -70,7 +99,7 @@ services:
             notExposeAsWebApp: true
 
     $$cap_appname-trading:
-        image: aureumvictoria/uncoded-trading-bot:2025.09.09
+        image: aureumvictoria/uncoded-trading-bot:3
         restart: always
         depends_on:
             - $$cap_appname-db
@@ -88,7 +117,7 @@ services:
             notExposeAsWebApp: true
 
     $$cap_appname-telegram:
-        image: aureumvictoria/uncoded-telegram-bot:2025.09.09
+        image: aureumvictoria/uncoded-telegram-bot:3
         restart: always
         depends_on:
             - $$cap_appname-db
@@ -108,7 +137,7 @@ services:
             notExposeAsWebApp: true
 
     $$cap_appname-frontend:
-        image: tbotteam/uncoded-js-frontend:latest
+        image: tbotteam/uncoded-js-frontend:final
         restart: always
         depends_on:
             - $$cap_appname-db
